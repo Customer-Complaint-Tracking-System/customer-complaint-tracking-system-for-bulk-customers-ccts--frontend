@@ -350,7 +350,7 @@ export default function Home() {
             CCTS
           </Link>
           <p>
-            © {new Date().getFullYear()} CCTS. Customer complaints, handled
+            © 2026 CCTS. Customer complaints, handled
             better.
           </p>
         </div>
