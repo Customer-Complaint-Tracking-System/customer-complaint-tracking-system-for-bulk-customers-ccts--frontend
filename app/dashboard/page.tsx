@@ -122,9 +122,7 @@ export default function DashboardPage() {
 
             <span className="mx-1 hidden h-8 w-px bg-white/30 sm:block" />
 
-            <span className="hidden text-sm text-slate-300 sm:block md:text-base">
-              Customer care
-            </span>
+            
           </Link>
         </div>
 
