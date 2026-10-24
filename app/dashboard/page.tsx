@@ -7,6 +7,7 @@ import {
   Activity,
   Bell,
   ChevronRight,
+  ChevronDown,
   CircleHelp,
   ClipboardList,
   FileText,
@@ -20,6 +21,7 @@ import {
   Users,
   UserRound,
   X,
+  Headset,
 } from "lucide-react";
 
 type IconType = ComponentType<{ size?: number; className?: string }>;
@@ -95,31 +97,57 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800">
-      {/* Top navigation */}
-      <header className="sticky top-0 z-30 flex h-[72px] items-center justify-between border-b border-slate-200 bg-white px-4 sm:px-6">
-        <div className="flex items-center gap-3">
+    <div className="min-h-screen bg-[#f7f9fc] text-[#142747]">
+      {/* Navy CCTS header */}
+      <header className="sticky top-0 z-30 flex h-[76px] items-center justify-between border-b border-white/10 bg-[#152d4e] px-4 text-white sm:px-6 lg:px-8">
+        <div className="flex min-w-0 items-center gap-3">
           <button
             type="button"
             onClick={toggleSidebar}
             aria-label={sidebarOpen ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={sidebarOpen}
-            className="flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg bg-blue-700 text-white transition hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+            className="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-xl text-slate-200 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#36c4b5]"
           >
-            {sidebarOpen ? <X size={25} /> : <Menu size={25} />}
+            {sidebarOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
 
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-700 text-white">
-            <MessageSquare size={22} />
-          </div>
+          <Link href="/dashboard" className="flex min-w-0 items-center gap-3">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#10968c] text-white">
+              <MessageSquare size={22} />
+            </span>
 
-          <div>
-            <h1 className="text-lg font-bold text-slate-900">CCTS</h1>
-            <p className="text-xs text-slate-500">Complaint tracking</p>
-          </div>
+            <span className="text-[25px] font-bold tracking-tight sm:text-[30px]">
+              CCTS
+            </span>
+
+            <span className="mx-1 hidden h-8 w-px bg-white/30 sm:block" />
+
+            <span className="hidden text-sm text-slate-300 sm:block md:text-base">
+              Customer care
+            </span>
+          </Link>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+          <Link
+            href="/help"
+            className="hidden items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-white/10 hover:text-white lg:flex"
+          >
+            <Headset size={19} />
+            <span>Here to help, every step of the way</span>
+          </Link>
+
+          <Link
+            href="/help"
+            aria-label="Help and support"
+            title="Help and support"
+            className="flex h-10 w-10 items-center justify-center rounded-xl text-slate-300 transition hover:bg-white/10 hover:text-white lg:hidden"
+          >
+            <Headset size={20} />
+          </Link>
+
+          <span className="mx-1 hidden h-8 w-px bg-white/20 sm:block" />
+
           {/* Notifications */}
           <div className="relative">
             <button
@@ -130,23 +158,21 @@ export default function DashboardPage() {
               }}
               aria-label="Notifications"
               aria-expanded={noticeOpen}
-              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100"
+              className="relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl text-slate-200 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#36c4b5]"
             >
-              <Bell size={21} />
+              <Bell size={20} />
             </button>
 
             {noticeOpen && (
-              <div className="absolute right-0 top-12 z-[110] w-64 rounded-xl border border-slate-200 bg-white p-4 shadow-xl">
-                <h3 className="font-semibold text-slate-900">
-                  Notifications
-                </h3>
-                <p className="mt-2 text-sm text-slate-500">
+              <div className="absolute right-0 top-12 z-[110] w-64 rounded-xl border border-[#dce5ef] bg-white p-4 text-[#142747] shadow-xl">
+                <h3 className="font-semibold">Notifications</h3>
+                <p className="mt-2 text-sm text-[#647895]">
                   You have no new notifications.
                 </p>
                 <button
                   type="button"
                   onClick={() => setNoticeOpen(false)}
-                  className="mt-3 cursor-pointer text-sm font-medium text-blue-700 hover:underline"
+                  className="mt-3 cursor-pointer text-sm font-semibold text-[#087f78] hover:underline"
                 >
                   Close
                 </button>
@@ -154,7 +180,7 @@ export default function DashboardPage() {
             )}
           </div>
 
-          {/* Account menu */}
+          {/* Compact account control */}
           <div className="relative">
             <button
               type="button"
@@ -164,33 +190,44 @@ export default function DashboardPage() {
               }}
               aria-label="Open account menu"
               aria-expanded={accountOpen}
-              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-blue-100 text-blue-800 hover:bg-blue-200"
+              className="flex h-10 cursor-pointer items-center gap-2 rounded-full border border-white/20 bg-white/10 py-1 pl-1 pr-2 text-white transition hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-[#36c4b5]"
             >
-              <UserRound size={21} />
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#10968c] text-white">
+                <UserRound size={18} />
+              </span>
+              <span className="hidden text-sm font-medium sm:inline">
+                Account
+              </span>
+              <ChevronDown
+                size={15}
+                className={`text-slate-300 transition ${
+                  accountOpen ? "rotate-180" : ""
+                }`}
+              />
             </button>
 
             {accountOpen && (
-              <div className="absolute right-0 top-12 z-[110] w-52 rounded-xl border border-slate-200 bg-white p-2 shadow-xl">
+              <div className="absolute right-0 top-12 z-[110] w-56 rounded-xl border border-[#dce5ef] bg-white p-2 text-[#142747] shadow-xl">
                 <Link
                   href="/account"
                   onClick={() => setAccountOpen(false)}
-                  className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm hover:bg-slate-100"
+                  className="flex items-center gap-3 rounded-lg px-3 py-3 text-sm transition hover:bg-[#edf8f7]"
                 >
-                  <UserRound size={17} />
+                  <UserRound size={17} className="text-[#087f78]" />
                   Account options
                 </Link>
                 <Link
                   href="/settings"
                   onClick={() => setAccountOpen(false)}
-                  className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm hover:bg-slate-100"
+                  className="flex items-center gap-3 rounded-lg px-3 py-3 text-sm transition hover:bg-[#edf8f7]"
                 >
-                  <Settings size={17} />
+                  <Settings size={17} className="text-[#087f78]" />
                   Settings
                 </Link>
                 <Link
                   href="/login"
                   onClick={() => setAccountOpen(false)}
-                  className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-red-600 hover:bg-red-50"
+                  className="flex items-center gap-3 rounded-lg px-3 py-3 text-sm text-red-700 transition hover:bg-red-50"
                 >
                   <LogOut size={17} />
                   Sign out
@@ -201,41 +238,49 @@ export default function DashboardPage() {
         </div>
       </header>
 
-      {/* Clickable background overlay */}
+      {/* Clickable overlay */}
       {sidebarOpen && (
         <button
           type="button"
           aria-label="Close navigation menu"
           onClick={closeSidebar}
-          className="fixed inset-0 z-[80] cursor-pointer bg-black/40"
+          className="fixed inset-0 z-[80] cursor-pointer bg-[#10233d]/40"
         />
       )}
 
-      {/* Sidebar */}
+      {/* Slide-out sidebar */}
       <aside
         aria-label="Main navigation"
         aria-hidden={!sidebarOpen}
-        className={`fixed inset-y-0 left-0 z-[90] flex w-[280px] max-w-[85vw] flex-col border-r border-slate-200 bg-white shadow-2xl transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-y-0 left-0 z-[90] flex w-[280px] max-w-[85vw] flex-col border-r border-[#dce5ef] bg-white shadow-2xl transition-transform duration-300 ease-in-out ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex h-[77px] shrink-0 items-center justify-between border-b border-slate-200 px-5">
-          <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-700 text-white">
+        <div className="flex h-[77px] shrink-0 items-center justify-between border-b border-[#e2e9f1] px-5">
+          <Link
+            href="/dashboard"
+            onClick={closeSidebar}
+            className="flex items-center gap-3"
+          >
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#10968c] text-white">
               <MessageSquare size={23} />
-            </div>
-            <div>
-              <h2 className="text-lg font-bold text-slate-900">CCTS</h2>
-              <p className="text-xs text-slate-500">Complaint tracking</p>
-            </div>
-          </div>
+            </span>
+            <span>
+              <span className="block text-lg font-bold text-[#152d4e]">
+                CCTS
+              </span>
+              <span className="block text-xs text-[#647895]">
+                Customer care
+              </span>
+            </span>
+          </Link>
 
           <button
             type="button"
             onClick={closeSidebar}
             aria-label="Close sidebar"
             tabIndex={sidebarOpen ? 0 : -1}
-            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg hover:bg-slate-100"
+            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg text-[#647895] transition hover:bg-[#edf8f7] hover:text-[#087f78]"
           >
             <X size={22} />
           </button>
@@ -244,13 +289,14 @@ export default function DashboardPage() {
         <nav className="flex-1 space-y-5 overflow-y-auto px-3 py-5">
           {navigation.map((section) => (
             <section key={section.heading}>
-              <h3 className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-slate-400">
+              <h3 className="mb-2 px-3 text-[11px] font-bold uppercase tracking-[0.13em] text-[#8292a8]">
                 {section.heading}
               </h3>
 
               <div className="space-y-1">
                 {section.items.map((item) => {
                   const Icon = item.icon;
+                  const active = item.href === "/dashboard";
 
                   return (
                     <Link
@@ -258,11 +304,15 @@ export default function DashboardPage() {
                       href={item.href}
                       tabIndex={sidebarOpen ? 0 : -1}
                       onClick={closeSidebar}
-                      className="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-slate-600 transition hover:bg-blue-50 hover:text-blue-700"
+                      className={`flex cursor-pointer items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition ${
+                        active
+                          ? "bg-[#e8f6f4] text-[#087f78]"
+                          : "text-[#536781] hover:bg-[#f1f8f8] hover:text-[#087f78]"
+                      }`}
                     >
                       <Icon size={19} />
                       <span className="flex-1">{item.label}</span>
-                      <ChevronRight size={16} />
+                      <ChevronRight size={16} className="opacity-60" />
                     </Link>
                   );
                 })}
@@ -271,48 +321,56 @@ export default function DashboardPage() {
           ))}
         </nav>
 
-        <div className="shrink-0 border-t border-slate-200 p-4">
+        <div className="shrink-0 border-t border-[#e2e9f1] p-4">
           <Link
             href="/account"
             tabIndex={sidebarOpen ? 0 : -1}
             onClick={closeSidebar}
-            className="flex items-center gap-3 rounded-lg bg-slate-50 p-3 hover:bg-blue-50"
+            className="flex items-center gap-3 rounded-xl border border-[#e2e9f1] bg-[#f8fafc] p-3 transition hover:border-[#b7e2dd] hover:bg-[#edf8f7]"
           >
-            <UserRound size={21} className="text-blue-700" />
-            <div>
-              <p className="text-sm font-semibold">Staff account</p>
-              <p className="text-xs text-slate-500">Account options</p>
-            </div>
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#e0f3f0] text-[#087f78]">
+              <UserRound size={20} />
+            </span>
+            <span>
+              <span className="block text-sm font-semibold text-[#152d4e]">
+                Staff account
+              </span>
+              <span className="block text-xs text-[#647895]">
+                Account options
+              </span>
+            </span>
           </Link>
         </div>
       </aside>
 
-      {/* Dashboard content */}
+      {/* Dashboard body */}
       <main className="mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
           <div>
-            <p className="mb-1 text-sm text-slate-500">Workspace</p>
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+            <p className="mb-1 text-sm font-medium text-[#087f78]">
+              Workspace
+            </p>
+            <h1 className="text-2xl font-bold tracking-tight text-[#152d4e] sm:text-3xl">
               Dashboard
             </h1>
-            <p className="mt-2 text-sm text-slate-500">
+            <p className="mt-2 text-sm text-[#647895]">
               Overview of your complaint tracking workspace.
             </p>
             {currentDate && (
-              <p className="mt-2 text-xs text-slate-400">{currentDate}</p>
+              <p className="mt-2 text-xs text-[#8292a8]">{currentDate}</p>
             )}
           </div>
 
           <Link
             href="/assigned-complaints"
-            className="inline-flex items-center gap-2 rounded-lg bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800"
+            className="inline-flex items-center gap-2 rounded-lg bg-[#087f78] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#066b65] focus:outline-none focus:ring-4 focus:ring-[#087f78]/20"
           >
             <ClipboardList size={18} />
             View complaints
           </Link>
         </div>
 
-        {/* Summary cards: no invented complaint counts */}
+        {/* Summary cards */}
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <SummaryCard
             title="All complaints"
@@ -346,33 +404,35 @@ export default function DashboardPage() {
 
         <div className="mt-8 grid gap-6 lg:grid-cols-3">
           {/* Recent complaints */}
-          <section className="rounded-xl border border-slate-200 bg-white p-5 sm:p-6 lg:col-span-2">
+          <section className="rounded-xl border border-[#dce5ef] bg-white p-5 sm:p-6 lg:col-span-2">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <h2 className="text-lg font-bold text-slate-900">
+                <h2 className="text-lg font-bold text-[#152d4e]">
                   Recent complaints
                 </h2>
-                <p className="mt-1 text-sm text-slate-500">
+                <p className="mt-1 text-sm text-[#647895]">
                   Your complaint activity will appear here.
                 </p>
               </div>
-              <ClipboardList className="text-slate-400" size={22} />
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#e8f6f4] text-[#087f78]">
+                <ClipboardList size={21} />
+              </span>
             </div>
 
-            <div className="mt-6 flex min-h-48 flex-col items-center justify-center rounded-lg border border-dashed border-slate-300 px-4 py-8 text-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-100">
-                <FileText size={23} className="text-slate-500" />
+            <div className="mt-6 flex min-h-48 flex-col items-center justify-center rounded-lg border border-dashed border-[#d5e0ec] px-4 py-8 text-center">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#f0f5f9] text-[#536781]">
+                <FileText size={23} />
               </div>
-              <h3 className="mt-4 font-semibold text-slate-800">
+              <h3 className="mt-4 font-semibold text-[#152d4e]">
                 No complaint records to display
               </h3>
-              <p className="mt-2 max-w-sm text-sm text-slate-500">
+              <p className="mt-2 max-w-sm text-sm leading-6 text-[#647895]">
                 No sample complaints are being shown. Real complaint records
                 can appear here when a data source is connected.
               </p>
               <Link
                 href="/assigned-complaints"
-                className="mt-4 text-sm font-semibold text-blue-700 hover:underline"
+                className="mt-4 text-sm font-semibold text-[#087f78] hover:underline"
               >
                 Open assigned complaints →
               </Link>
@@ -380,9 +440,9 @@ export default function DashboardPage() {
           </section>
 
           {/* Quick access */}
-          <section className="rounded-xl border border-slate-200 bg-white p-5 sm:p-6">
-            <h2 className="text-lg font-bold text-slate-900">Quick access</h2>
-            <p className="mt-1 text-sm text-slate-500">
+          <section className="rounded-xl border border-[#dce5ef] bg-white p-5 sm:p-6">
+            <h2 className="text-lg font-bold text-[#152d4e]">Quick access</h2>
+            <p className="mt-1 text-sm text-[#647895]">
               Navigate to other sections.
             </p>
 
@@ -392,21 +452,13 @@ export default function DashboardPage() {
                 icon={ClipboardList}
                 label="Assigned complaints"
               />
-              <QuickLink
-                href="/customers"
-                icon={Users}
-                label="Customers"
-              />
+              <QuickLink href="/customers" icon={Users} label="Customers" />
               <QuickLink
                 href="/customer-history"
                 icon={History}
                 label="Customer history"
               />
-              <QuickLink
-                href="/settings"
-                icon={Settings}
-                label="Settings"
-              />
+              <QuickLink href="/settings" icon={Settings} label="Settings" />
               <QuickLink
                 href="/help"
                 icon={CircleHelp}
@@ -416,9 +468,9 @@ export default function DashboardPage() {
           </section>
         </div>
 
-        <footer className="mt-8 flex flex-wrap items-center justify-between gap-2 border-t border-slate-200 py-5 text-xs text-slate-500">
-          <p>CCTS · Complaint tracking</p>
-          <p>Frontend interface</p>
+        <footer className="mt-8 flex flex-wrap items-center justify-between gap-2 border-t border-[#dce5ef] py-5 text-xs text-[#71829a]">
+          <p className="font-semibold text-[#152d4e]">CCTS · Customer care</p>
+          <p>Here to help, every step of the way.</p>
         </footer>
       </main>
     </div>
@@ -441,18 +493,18 @@ function SummaryCard({
   return (
     <Link
       href={href}
-      className="group rounded-xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-md"
+      className="group rounded-xl border border-[#dce5ef] bg-white p-5 transition hover:-translate-y-0.5 hover:border-[#9bd7d0] hover:shadow-md"
     >
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="text-sm font-medium text-slate-500">{title}</p>
-          <p className="mt-3 text-3xl font-bold text-slate-900">{value}</p>
+          <p className="text-sm font-medium text-[#647895]">{title}</p>
+          <p className="mt-3 text-3xl font-bold text-[#152d4e]">{value}</p>
         </div>
-        <div className="rounded-lg bg-blue-50 p-3 text-blue-700 transition group-hover:bg-blue-100">
+        <div className="rounded-xl bg-[#e8f6f4] p-3 text-[#087f78] transition group-hover:bg-[#d7f0ec]">
           <Icon size={21} />
         </div>
       </div>
-      <p className="mt-4 text-xs text-slate-500">{description}</p>
+      <p className="mt-4 text-xs leading-5 text-[#71829a]">{description}</p>
     </Link>
   );
 }
@@ -469,11 +521,11 @@ function QuickLink({
   return (
     <Link
       href={href}
-      className="flex items-center gap-3 rounded-lg border border-transparent px-3 py-3 text-sm font-medium text-slate-600 transition hover:border-slate-200 hover:bg-slate-50 hover:text-blue-700"
+      className="flex items-center gap-3 rounded-lg border border-transparent px-3 py-3 text-sm font-medium text-[#536781] transition hover:border-[#dce5ef] hover:bg-[#f1f8f8] hover:text-[#087f78]"
     >
       <Icon size={18} />
       <span className="flex-1">{label}</span>
-      <ChevronRight size={16} />
+      <ChevronRight size={16} className="text-[#8292a8]" />
     </Link>
   );
 }
