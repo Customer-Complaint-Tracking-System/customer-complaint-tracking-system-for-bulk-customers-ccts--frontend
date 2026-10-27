@@ -1,5 +1,5 @@
-import ManagerDashbaordSidebar from "@/components/manager/dashbaord-sidebar";
-import ManagerNavbar from "@/components/manager/navbar";
+import ManagerDashbaordSidebar from "@/components/manager/home/dashbaord-sidebar";
+import ManagerNavbar from "@/components/manager/home/navbar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { PropsWithChildren } from "react";
 

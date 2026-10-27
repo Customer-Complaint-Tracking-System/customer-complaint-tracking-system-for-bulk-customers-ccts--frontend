@@ -1,7 +1,7 @@
-import ComplaintsOverview from "@/components/manager/complaint-overview";
-import ComplaintStats from "@/components/manager/complaint-stats";
-import NeedsYourAttention from "@/components/manager/need-your-attention";
-import RecentActivities from "@/components/manager/recent-activity";
+import ComplaintsOverview from "@/components/manager/home/complaint-overview";
+import ComplaintStats from "@/components/manager/home/complaint-stats";
+import NeedsYourAttention from "@/components/manager/home/need-your-attention";
+import RecentActivities from "@/components/manager/home/recent-activity";
 
 const ManagerHomePage = () => {
   return (

@@ -26,8 +26,8 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
-import CCTSLogo from "../shared/ccts-logo";
-import UserProfile from "../shared/user-profile";
+import CCTSLogo from "@/components/shared/ccts-logo";
+import UserProfile from "@/components/shared/user-profile";
 
 const items = [
   {

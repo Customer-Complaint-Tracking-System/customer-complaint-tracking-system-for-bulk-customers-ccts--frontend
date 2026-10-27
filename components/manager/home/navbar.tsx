@@ -1,8 +1,9 @@
 "use client";
 
-import Notification from "./notification";
-import UserProfile from "../shared/user-profile";
+import UserProfile from "@/components/shared/user-profile";
 import ComplaintDateSelector from "./complaint-date-selector";
+import Notification from "./notification";
+
 
 const ManagerNavbar = () => {
   return (
