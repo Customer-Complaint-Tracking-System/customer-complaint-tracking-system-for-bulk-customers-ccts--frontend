@@ -1,15 +1,17 @@
 import ManagerDashbaordSidebar from "@/components/manager/home/dashbaord-sidebar";
 import ManagerNavbar from "@/components/manager/home/navbar";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, Suspense } from "react";
 
 const ManagerRootLayout = ({ children }: PropsWithChildren) => {
   return (
     <SidebarProvider>
-      <ManagerDashbaordSidebar />
+      <Suspense fallback={<div className="w-64 bg-primary" />}>
+        <ManagerDashbaordSidebar />
+      </Suspense>
       <main className="flex flex-col gap-5 min-h-screen w-screen bg-muted">
         <ManagerNavbar />
-        <div className="px-5 flex-1">{children}</div>
+        <div className="px-5 flex-1 pb-10">{children}</div>
       </main>
     </SidebarProvider>
   );

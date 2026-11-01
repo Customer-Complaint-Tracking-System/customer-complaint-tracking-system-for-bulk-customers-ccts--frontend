@@ -60,7 +60,7 @@ export default function Home() {
           </div>
 
           <Link
-            href="/dashboard"
+            href="/login"
             className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700"
           >
             Get started
@@ -91,7 +91,7 @@ export default function Home() {
 
             <div className="mt-9 flex flex-col gap-4 sm:flex-row">
               <Link
-                href="/dashboard"
+                href="/login"
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-6 py-3.5 font-semibold text-white shadow-lg shadow-emerald-600/20 transition hover:bg-emerald-700"
               >
                 Get started
@@ -334,7 +334,7 @@ export default function Home() {
             deliver better customer experiences.
           </p>
           <Link
-            href="/dashboard"
+            href="/login"
             className="mt-8 inline-flex items-center gap-2 rounded-lg bg-white px-6 py-3.5 font-semibold text-emerald-700 transition hover:bg-emerald-50"
           >
             Get started

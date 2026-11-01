@@ -1,18 +1,17 @@
 "use client";
 
 import {
-  ArrowUpRight,
-  ChartNoAxesCombined,
-  ClipboardCheck,
   History,
   Inbox,
   LayoutDashboard,
   Settings,
-  Users,
+  Users
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import CCTSLogo from "@/components/shared/ccts-logo";
+import UserProfile from "@/components/shared/user-profile";
 import {
   Sidebar,
   SidebarContent,
@@ -26,8 +25,6 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
-import CCTSLogo from "@/components/shared/ccts-logo";
-import UserProfile from "@/components/shared/user-profile";
 
 const items = [
   {
@@ -45,21 +42,21 @@ const items = [
     url: "/manager/team",
     icon: Users,
   },
-  {
-    title: "Escalations",
-    url: "/manager/escalations",
-    icon: ArrowUpRight,
-  },
-  {
-    title: "Approvals",
-    url: "/manager/approvals",
-    icon: ClipboardCheck,
-  },
-  {
-    title: "Reports & Analytics",
-    url: "/manager/reports",
-    icon: ChartNoAxesCombined,
-  },
+  // {
+  //   title: "Escalations",
+  //   url: "/manager/escalations",
+  //   icon: ArrowUpRight,
+  // },
+  // {
+  //   title: "Approvals",
+  //   url: "/manager/approvals",
+  //   icon: ClipboardCheck,
+  // },
+  // {
+  //   title: "Reports & Analytics",
+  //   url: "/manager/reports",
+  //   icon: ChartNoAxesCombined,
+  // },
   {
     title: "Customer History",
     url: "/manager/customer-history",
@@ -92,7 +89,7 @@ const ManagerDashbaordSidebar = () => {
               {items.map((item) => {
                 const isActive =
                   pathname === item.url ||
-                  (item.url !== "/dashboard" &&
+                  (item.url !== "/manager" &&
                     pathname.startsWith(`${item.url}/`));
 
                 return (
