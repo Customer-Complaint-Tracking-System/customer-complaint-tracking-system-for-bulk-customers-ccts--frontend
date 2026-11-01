@@ -49,6 +49,7 @@ interface Complaint {
 interface ComplaintInboxProps {
   complaints?: Complaint[];
   onComplaintClick?: (complaint: Complaint) => void;
+  role: "manager" | "staff";
 }
 
 const defaultComplaints: Complaint[] = [
@@ -176,8 +177,11 @@ const statusStyles: Record<ComplaintStatus, string> = {
 const ComplaintInbox: React.FC<ComplaintInboxProps> = ({
   complaints = defaultComplaints,
   onComplaintClick,
+  role,
 }) => {
   const router = useRouter();
+
+  const roleMatchRoute = role === "manager" ? "manager" : "staff";
 
   const [sortOrder, setSortOrder] = useState("newest");
   const [currentPage, setCurrentPage] = useState(1);
@@ -216,7 +220,7 @@ const ComplaintInbox: React.FC<ComplaintInboxProps> = ({
       return;
     }
 
-    router.push(`/manager/complaints/${complaint.id}`);
+    router.push(`/${roleMatchRoute}/complaints/${complaint.id}`);
   };
 
   return (

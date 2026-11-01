@@ -2,7 +2,7 @@
 
 import UserProfile from "@/components/shared/user-profile";
 import ComplaintDateSelector from "./complaint-date-selector";
-import Notification from "./notification";
+import Notification from "../../shared/notification";
 
 
 const ManagerNavbar = () => {

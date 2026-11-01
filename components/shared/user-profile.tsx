@@ -15,7 +15,7 @@ import { cn } from "cn";
 import { ChevronDown, LogOut, Settings, UserRound } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-type UserRole = "manager" | "complaint";
+type UserRole = "manager" | "staff";
 
 type UserProfileProps = {
   fullname: string;
@@ -36,7 +36,7 @@ const UserProfile = ({ fullname, role, image, side,sidebar }: UserProfileProps) 
     .join("")
     .toUpperCase();
 
-  const formattedRole = role === "manager" ? "Manager" : "Complaint";
+  const formattedRole = role === "manager" ? "Manager" : "Staff";
 
   return (
     <DropdownMenu>
