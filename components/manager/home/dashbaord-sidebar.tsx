@@ -1,6 +1,9 @@
 "use client";
 
 import {
+  ArrowUpRight,
+  ChartNoAxesCombined,
+  ClipboardCheck,
   History,
   Inbox,
   LayoutDashboard,
@@ -42,21 +45,21 @@ const items = [
     url: "/manager/team",
     icon: Users,
   },
-  // {
-  //   title: "Escalations",
-  //   url: "/manager/escalations",
-  //   icon: ArrowUpRight,
-  // },
-  // {
-  //   title: "Approvals",
-  //   url: "/manager/approvals",
-  //   icon: ClipboardCheck,
-  // },
-  // {
-  //   title: "Reports & Analytics",
-  //   url: "/manager/reports",
-  //   icon: ChartNoAxesCombined,
-  // },
+  {
+    title: "Escalations",
+    url: "/manager/escalations",
+    icon: ArrowUpRight,
+  },
+  {
+    title: "Approvals",
+    url: "/manager/approvals",
+    icon: ClipboardCheck,
+  },
+  {
+    title: "Reports & Analytics",
+    url: "/manager/reports",
+    icon: ChartNoAxesCombined,
+  },
   {
     title: "Customer History",
     url: "/manager/customer-history",
