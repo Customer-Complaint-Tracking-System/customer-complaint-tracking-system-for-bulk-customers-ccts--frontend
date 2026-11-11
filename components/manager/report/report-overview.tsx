@@ -352,7 +352,7 @@ export default function ReportsOverview() {
   });
 
   return (
-    <div className="min-h-screen bg-[#F7F9FC] p-4 md:p-6">
+    <div className="">
       <div className="mx-auto max-w-[1600px] space-y-5">
         {/* HEADER */}
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">

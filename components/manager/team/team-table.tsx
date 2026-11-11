@@ -1,14 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import {
-  ArrowDownWideNarrow,
   ChevronLeft,
-  ChevronRight,
-  Mail,
-  Phone,
+  ChevronRight
 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
 import {
   Table,
@@ -19,6 +16,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import UserAvatar from "@/components/shared/user-avatar";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -27,6 +25,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "cn";
+import TeamFilters from "./team-filters";
 
 type StaffStatus = "Active" | "Inactive" | "On Leave";
 
@@ -43,6 +43,7 @@ interface Staff {
   resolvedComplaints: number;
   status: StaffStatus;
   dateJoined: string;
+  workload: "high" | "normal" | "low"
 }
 
 interface TeamTableProps {
@@ -62,6 +63,7 @@ const defaultStaff: Staff[] = [
     resolvedComplaints: 42,
     status: "Active",
     dateJoined: "12 Jan 2025",
+    workload: "high",
   },
   {
     id: "2",
@@ -74,6 +76,7 @@ const defaultStaff: Staff[] = [
     resolvedComplaints: 35,
     status: "Active",
     dateJoined: "20 Feb 2025",
+    workload: "normal",
   },
   {
     id: "3",
@@ -86,6 +89,7 @@ const defaultStaff: Staff[] = [
     resolvedComplaints: 28,
     status: "Active",
     dateJoined: "15 Mar 2025",
+    workload: "low",
   },
   {
     id: "4",
@@ -98,6 +102,7 @@ const defaultStaff: Staff[] = [
     resolvedComplaints: 21,
     status: "On Leave",
     dateJoined: "08 Apr 2025",
+    workload: "low",
   },
   {
     id: "5",
@@ -110,6 +115,7 @@ const defaultStaff: Staff[] = [
     resolvedComplaints: 31,
     status: "Active",
     dateJoined: "10 May 2025",
+    workload: "low",
   },
   {
     id: "6",
@@ -122,6 +128,7 @@ const defaultStaff: Staff[] = [
     resolvedComplaints: 16,
     status: "Inactive",
     dateJoined: "18 Jun 2025",
+    workload: "normal",
   },
 ];
 
@@ -186,34 +193,9 @@ const TeamTable: React.FC<TeamTableProps> = ({
   };
 
   return (
-    <section className="w-full space-y-3">
+    <section className="w-full space-y-3 h-full">
       {/* Section heading */}
-      <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
-        <div className="flex items-center gap-2 ml-auto">
-          <ArrowDownWideNarrow size={15} className="text-slate-500" />
-
-          <Select
-            value={sortOrder}
-            onValueChange={(value) => {
-              if (value) {
-                setSortOrder(value);
-                setCurrentPage(1);
-              }
-            }}
-          >
-            <SelectTrigger className="h-8 w-[155px] border-0 bg-transparent text-xs text-slate-500 shadow-none focus:ring-0">
-              <SelectValue />
-            </SelectTrigger>
-
-            <SelectContent>
-              <SelectItem value="name">Name: A–Z</SelectItem>
-              <SelectItem value="newest">Recently joined</SelectItem>
-              <SelectItem value="oldest">Oldest joined</SelectItem>
-              <SelectItem value="workload">Highest workload</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
+     <TeamFilters />
 
       {/* Team table */}
       <div className="overflow-x-auto rounded-xl border border-slate-200">
@@ -221,17 +203,18 @@ const TeamTable: React.FC<TeamTableProps> = ({
           <TableHeader>
             <TableRow className="border-slate-200 bg-slate-50/80 hover:bg-slate-50/80">
               {[
-                "Staff ID",
                 "Staff member",
                 "Role",
-                "Assigned complaints",
+                "Assigned",
+                "In progress",
                 "Resolved",
-                "Status",
-                "Date joined",
+                "Overdue",
+                "Workload",
+                "Actions",
               ].map((heading) => (
                 <TableHead
                   key={heading}
-                  className="whitespace-nowrap px-3 py-3 text-[10px] font-semibold uppercase tracking-wide text-slate-500 first:pl-4"
+                  className="whitespace-nowrap  px-3 py-3 text-[10px] font-semibold uppercase tracking-wide text-slate-500 first:pl-4"
                 >
                   {heading}
                 </TableHead>
@@ -256,25 +239,31 @@ const TeamTable: React.FC<TeamTableProps> = ({
                 className="cursor-pointer border-slate-200 transition-colors odd:bg-slate-50/60 hover:bg-emerald-50/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-emerald-500"
               >
                 {/* Staff ID */}
-                <TableCell className="whitespace-nowrap px-3 py-3 pl-4 text-xs font-semibold text-slate-800">
-                  {member.staffId}
+                <TableCell className="whitespace-nowrap px-3 py-3 pl-4 text-xs">
+                  <div className="flex items-center gap-2">
+                    <UserAvatar fullname={member.fullname} />
+                    <div className="">
+                      <p className="whitespace-nowrap text-xs">
+                        {member.fullname}
+                      </p>
+                      <p className="text-xs">{member.email}</p>
+                    </div>
+                  </div>
                 </TableCell>
 
                 {/* Staff information */}
                 <TableCell className="px-3 py-3">
-                  <div className="space-y-1">
-                    <p className="whitespace-nowrap text-xs font-semibold text-slate-800">
-                      {member.fullname}
+                  <div className="">
+                    <p
+                      className={`inline-flex whitespace-nowrap rounded-full px-2 py-1 text-[10px] font-medium`}
+                    >
+                      {member.role}
                     </p>
-
-                    <div className="flex items-center gap-1.5 text-[10px] text-slate-500">
-                      <Mail size={11} />
-                      {member.email}
-                    </div>
-
-                    <div className="flex items-center gap-1.5 text-[10px] text-slate-500">
-                      <Phone size={11} />
-                      {member.phone}
+                    <div className="flex items-center gap-1">
+                      <div className="size-1 rounded-full bg-brand-accent" />
+                      <span className="text-xs text-brand-text-gray">
+                        Available
+                      </span>
                     </div>
                   </div>
                 </TableCell>
@@ -284,15 +273,13 @@ const TeamTable: React.FC<TeamTableProps> = ({
                   <span
                     className={`inline-flex whitespace-nowrap rounded-full px-2 py-1 text-[10px] font-medium ${roleStyles[member.role]}`}
                   >
-                    {member.role}
+                    {member.assignedComplaints}
                   </span>
                 </TableCell>
 
                 {/* Assigned complaints */}
                 <TableCell className="px-3 py-3">
-                  <span className="text-xs font-semibold text-slate-800">
-                    {member.assignedComplaints}
-                  </span>
+                  <span className="text-xs">{member.assignedComplaints}</span>
                 </TableCell>
 
                 {/* Resolved complaints */}
@@ -305,15 +292,22 @@ const TeamTable: React.FC<TeamTableProps> = ({
                 {/* Status */}
                 <TableCell className="px-3 py-3">
                   <span
-                    className={`inline-flex whitespace-nowrap rounded-full px-2 py-1 text-[10px] font-medium ${statusStyles[member.status]}`}
+                    className={`inline-flex whitespace-nowrap px-2 py-1 text-[10px]`}
                   >
-                    {member.status}
+                    10
                   </span>
                 </TableCell>
 
                 {/* Date joined */}
                 <TableCell className="whitespace-nowrap px-3 py-3 text-xs text-slate-700">
-                  {member.dateJoined}
+                  <WorkloadBadge workload={member.workload} />
+                </TableCell>
+
+                <TableCell className="whitespace-nowrap px-3 py-3 text-xs text-brand-accent">
+                  <div className="flex items-center justify-center gap-1">
+                    <p>View details</p>
+                    <ChevronRight size={14} />
+                  </div>
                 </TableCell>
               </TableRow>
             ))}
@@ -390,3 +384,45 @@ const TeamTable: React.FC<TeamTableProps> = ({
 };
 
 export default TeamTable;
+
+
+type WorkloadBadgeProps = {
+  workload: "high" | "normal" | "low";
+  className?: string;
+};
+
+const workloadStyles = {
+  high: {
+    label: "High",
+    dot: "bg-red-500",
+    badge: "bg-red-50 text-red-700",
+  },
+  normal: {
+    label: "Normal",
+    dot: "bg-amber-500",
+    badge: "bg-amber-50 text-amber-700",
+  },
+  low: {
+    label: "Low",
+    dot: "bg-emerald-500",
+    badge: "bg-emerald-50 text-emerald-700",
+  },
+};
+
+const WorkloadBadge = ({ workload, className }: WorkloadBadgeProps) => {
+  const styles = workloadStyles[workload];
+
+  return (
+    <div
+      className={cn(
+        "inline-flex items-center gap-2 rounded-full px-2.5 py-1 text-xs font-medium",
+        styles.badge,
+        className,
+      )}
+    >
+      <span className={cn("size-2 rounded-full", styles.dot)} />
+      <span>{styles.label}</span>
+    </div>
+  );
+};
+

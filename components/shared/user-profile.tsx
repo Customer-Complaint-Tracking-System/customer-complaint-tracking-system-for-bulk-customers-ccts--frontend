@@ -54,13 +54,20 @@ const UserProfile = ({ fullname, role, image, side,sidebar }: UserProfileProps) 
         >
           <Avatar className="size-10 shrink-0">
             <AvatarImage src={image || undefined} alt={fullname} />
-            <AvatarFallback className="bg-brand-blue font-semibold text-white">
+            <AvatarFallback className="bg-[#142B4A] font-semibold text-white">
               {initials || "U"}
             </AvatarFallback>
           </Avatar>
 
           <div className="min-w-0 flex-1">
-            <p className={cn("truncate text-sm font-semibold", sidebar && "text-white")}>{fullname}</p>
+            <p
+              className={cn(
+                "truncate text-sm font-semibold",
+                sidebar && "text-white",
+              )}
+            >
+              {fullname}
+            </p>
             <p className="text-xs capitalize text-muted-foreground">
               {formattedRole}
             </p>
@@ -81,7 +88,7 @@ const UserProfile = ({ fullname, role, image, side,sidebar }: UserProfileProps) 
             <div className="flex items-center gap-3">
               <Avatar className="size-9">
                 <AvatarImage src={image || undefined} alt={fullname} />
-                <AvatarFallback className="bg-brand-blue text-sm font-semibold text-white">
+                <AvatarFallback className="bg-[#142B4A] text-sm font-semibold text-white">
                   {initials || "U"}
                 </AvatarFallback>
               </Avatar>

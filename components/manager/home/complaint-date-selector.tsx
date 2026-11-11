@@ -37,7 +37,7 @@ const ComplaintDateSelector = ({
           <Button
             variant="outline"
             data-empty={!date}
-            className="w-[212px] justify-between text-left font-normal data-[empty=true]:text-muted-foreground"
+            className="w-[212px] p-5 justify-between text-left font-normal data-[empty=true]:text-muted-foreground"
           >
             {date ? format(date, "PPP") : <span>Complaint date</span>}
             <ChevronDownIcon data-icon="inline-end" />

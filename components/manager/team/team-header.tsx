@@ -31,6 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import CustomButton from "@/components/shared/custom-button";
 
 interface AddStaffPayload {
   email: string;
@@ -112,21 +113,14 @@ const TeamHeader = ({ onAddStaff }: TeamHeaderProps) => {
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div className="space-y-1">
           <h1 className="text-lg font-semibold tracking-tight text-slate-800">
-            Team Members
+            Team Management
           </h1>
 
           <p className="text-xs text-slate-500">
-            Manage your organisation's staff, roles and performance.
+            Monitor team workloads and distribute complaints efficiently.
           </p>
         </div>
-
-        <Button
-          onClick={() => setOpen(true)}
-          className="h-9 gap-2 rounded-lg bg-teal-600 px-4 text-xs font-semibold text-white shadow-sm hover:bg-teal-700"
-        >
-          <Plus className="size-4" />
-          Add Staff Member
-        </Button>
+        <CustomButton icon={<Plus />} title="Assign complaint" />
       </div>
 
       {/* Add Staff Dialog */}

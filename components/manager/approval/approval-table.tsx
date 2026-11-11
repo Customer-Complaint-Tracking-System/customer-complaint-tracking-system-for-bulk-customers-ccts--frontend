@@ -50,6 +50,7 @@ import {
 } from "@/components/ui/dialog";
 import { useRouter } from "next/navigation";
 import AcceptRequestModal from "./accept-request-modal";
+import ApprovalFilters from "./approval-filters";
 
 // --------------------------------------------------
 // TYPES
@@ -463,7 +464,7 @@ export default function ApprovalTable() {
   // -----------------------------------------------
 
   return (
-    <div className="min-h-screen bg-[#F7F9FC] p-4 md:p-6">
+    <div className="min-h-screen bg-[#F7F9FC] md:py-6">
       <div className="mx-auto max-w-[1600px]">
         <Card className="overflow-hidden rounded-lg border-slate-200 shadow-none">
           {/* HEADER */}
@@ -499,122 +500,7 @@ export default function ApprovalTable() {
           </div>
 
           {/* FILTER SECTION */}
-          <div className="border-b border-slate-200 p-3">
-            <div className="grid grid-cols-1 items-end gap-3 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1.15fr_auto]">
-              {/* SEARCH */}
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-medium text-slate-600">
-                  Search requests
-                </label>
-
-                <div className="relative">
-                  <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-500" />
-
-                  <Input
-                    placeholder="Request ID, Complaint ID or staff name"
-                    value={search}
-                    onChange={(event) =>
-                      updateFilter(() => setSearch(event.target.value))
-                    }
-                    className="h-8 pl-8 text-[11px] shadow-none placeholder:text-slate-400"
-                  />
-                </div>
-              </div>
-
-              {/* REQUEST TYPE */}
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-medium text-slate-600">
-                  Request Type
-                </label>
-
-                <Select
-                  value={requestType}
-                  onValueChange={(value) => {
-                    if (value !== null) {
-                      updateFilter(() => setRequestType(value));
-                    }
-                  }}
-                >
-                  <SelectTrigger className="h-8 text-[11px] shadow-none">
-                    <SelectValue placeholder="All types" />
-                  </SelectTrigger>
-
-                  <SelectContent>
-                    <SelectItem value="all">All types</SelectItem>
-                    <SelectItem value="Refund">Refund</SelectItem>
-                    <SelectItem value="Compensation">Compensation</SelectItem>
-                    <SelectItem value="Discount">Discount</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* DATE REQUESTED */}
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-medium text-slate-600">
-                  Date requested
-                </label>
-
-                <Select
-                  value={dateFilter}
-                  onValueChange={(value) =>
-                    updateFilter(() => setDateFilter(value as DateFilter))
-                  }
-                >
-                  <SelectTrigger className="h-8 text-[11px] shadow-none">
-                    <SelectValue />
-                  </SelectTrigger>
-
-                  <SelectContent>
-                    <SelectItem value="all">All time</SelectItem>
-                    <SelectItem value="7days">Last 7 days</SelectItem>
-                    <SelectItem value="30days">Last 30 days</SelectItem>
-                    <SelectItem value="thisMonth">This month</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* STATUS */}
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-medium text-slate-600">
-                  Status
-                </label>
-
-                <Select
-                  value={statusFilter}
-                  onValueChange={(value) => {
-                    setStatusFilter(value as RequestStatus | "all");
-                    setCurrentPage(1);
-
-                    if (value !== "all") {
-                      setActiveTab(value as StatusTab);
-                    } else {
-                      setActiveTab("Pending");
-                    }
-                  }}
-                >
-                  <SelectTrigger className="h-8 text-[11px] shadow-none">
-                    <SelectValue />
-                  </SelectTrigger>
-
-                  <SelectContent>
-                    <SelectItem value="all">All statuses</SelectItem>
-                    <SelectItem value="Pending">Pending</SelectItem>
-                    <SelectItem value="Approved">Approved</SelectItem>
-                    <SelectItem value="Rejected">Rejected</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* RESET */}
-              <Button
-                variant="ghost"
-                onClick={resetFilters}
-                className="h-8 px-2 text-[10px] font-normal text-slate-500 hover:text-teal-700"
-              >
-                Reset
-              </Button>
-            </div>
-          </div>
+          <ApprovalFilters />
 
           {/* TABLE */}
           <CardContent className="p-0">
@@ -702,7 +588,7 @@ export default function ApprovalTable() {
                               onClick={() =>
                                 router.push(`/manager/approvals/${request.id}`)
                               }
-                              className="text-teal-700 hover:text-teal-900"
+                              className="text-teal-700 cursor-pointer hover:text-teal-900"
                             >
                               View
                             </button>
@@ -711,16 +597,9 @@ export default function ApprovalTable() {
                               <>
                                 <button
                                   onClick={() => setSelectedRequest(request)}
-                                  className="text-teal-700 hover:text-teal-900"
+                                  className="text-teal-700 cursor-pointer hover:text-teal-900"
                                 >
                                   Approve
-                                </button>
-
-                                <button
-                                  onClick={() => handleReject(request.id)}
-                                  className="text-red-600 hover:text-red-800"
-                                >
-                                  Reject
                                 </button>
                               </>
                             )}

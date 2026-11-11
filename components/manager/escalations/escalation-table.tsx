@@ -276,7 +276,7 @@ const EscalationTable = () => {
                       size="sm"
                       className="h-7 px-1 text-[11px] font-semibold text-teal-700 hover:text-teal-800 hover:bg-teal-50 whitespace-nowrap"
                       onClick={() =>
-                        (window.location.href = `/dashboard/escalations/${item.id}`)
+                        router.push(`/manager/escalations/${item.id}`)
                       }
                     >
                       View Details

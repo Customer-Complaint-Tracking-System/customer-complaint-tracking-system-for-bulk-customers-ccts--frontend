@@ -1,21 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
 import {
+  AlertCircle,
   ArrowLeft,
+  Check,
   ExternalLink,
   FileText,
   ShieldCheck,
-  Check,
-  X,
-  Clock,
-  AlertCircle,
+  X
 } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import CustomButton from "@/components/shared/custom-button";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 
 type Decision = "Approved" | "Rejected";
@@ -129,7 +128,7 @@ export default function ApprovalDetails() {
         {/* HEADER */}
         <div className="mb-4">
           <Link
-            href="/dashboard/approvals"
+            href="/manager/approvals"
             className="mb-3 inline-flex items-center gap-1 text-[10px] font-semibold text-teal-700 hover:underline"
           >
             <ArrowLeft size={12} />
@@ -405,22 +404,17 @@ export default function ApprovalDetails() {
                   </div>
                 ) : (
                   <div className="flex flex-wrap gap-2">
-                    <Button
-                      size="sm"
-                      className="h-8"
+                    <CustomButton
                       onClick={() => openDecision("Approved")}
-                    >
-                      Approve request
-                    </Button>
+                      title="Approve request"
+                      variant="primary"
+                    />
 
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="h-8 border-slate-200"
+                    <CustomButton
                       onClick={() => openDecision("Rejected")}
-                    >
-                      Reject request
-                    </Button>
+                      title=" Reject request"
+                      variant="outline"
+                    />
                   </div>
                 )}
 
@@ -560,7 +554,7 @@ export default function ApprovalDetails() {
               <div>
                 <h2
                   id="decision-title"
-                  className="text-sm font-semibold text-[#172b49]"
+                  className="text-base font-semibold text-[#172b49]"
                 >
                   {pendingDecision === "Approved"
                     ? "Approve refund request?"
@@ -592,7 +586,7 @@ export default function ApprovalDetails() {
                     setError("");
                   }}
                   placeholder="Explain why this request is being rejected..."
-                  className="min-h-24"
+                  className="min-h-24 resize-none focus-visible:ring-brand-accent/20"
                 />
 
                 {error && (
@@ -602,29 +596,25 @@ export default function ApprovalDetails() {
             )}
 
             <div className="flex justify-end gap-2">
-              <Button
+              <CustomButton
                 variant="outline"
-                size="sm"
                 onClick={() => {
                   setShowConfirmation(false);
                   setError("");
                 }}
-              >
-                Cancel
-              </Button>
+                title="Cancel"
+              />
 
-              <Button
-                size="sm"
+              <CustomButton
                 className={
                   pendingDecision === "Rejected"
                     ? "bg-red-600 hover:bg-red-700"
                     : ""
                 }
                 onClick={confirmDecision}
-              >
-                Confirm{" "}
-                {pendingDecision === "Approved" ? "approval" : "rejection"}
-              </Button>
+                title={`Confirm 
+                ${pendingDecision === "Approved" ? "approval" : "rejection"}`}
+              />
             </div>
           </div>
         </div>

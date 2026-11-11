@@ -53,7 +53,7 @@ const Notification = () => {
             <Bell className="size-5" />
 
             {unreadCount > 0 && (
-              <Badge className="absolute -right-1 -top-1 flex size-5 items-center justify-center rounded-full border-2 border-background bg-brand-blue p-0 text-[10px] text-white">
+              <Badge className="absolute -right-1 -top-1 flex size-5 items-center justify-center rounded-full border-2 border-background bg-brand-accent p-0 text-[10px] text-white">
                 {unreadCount}
               </Badge>
             )}

@@ -1,14 +1,10 @@
 import { Card, CardContent } from "@/components/ui/card";
 import {
-  ArrowUpRight,
-  CheckCircle2,
   CircleCheck,
   CircleX,
   Clock3,
-  Inbox,
-  Wallet,
+  Wallet
 } from "lucide-react";
-import React from "react";
 
 const stats = [
   {
@@ -40,7 +36,7 @@ const stats = [
 const ApprovalHeader = () => {
   return (
     <div>
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-2">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900">
             Approvals

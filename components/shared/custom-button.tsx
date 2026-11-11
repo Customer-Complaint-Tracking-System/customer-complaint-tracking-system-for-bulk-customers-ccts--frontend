@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { ReactNode } from "react";
 
 type CustomButtonProps = {
   title: string;
+  icon?: ReactNode;
+  iconPosition?: "left" | "right";
   variant?: "primary" | "outline";
   onClick?: () => void;
   disabled?: boolean;
@@ -12,6 +15,8 @@ type CustomButtonProps = {
 
 const CustomButton = ({
   title,
+  icon,
+  iconPosition = "left",
   variant = "primary",
   onClick,
   disabled = false,
@@ -35,7 +40,15 @@ const CustomButton = ({
         className,
       )}
     >
+      {icon && iconPosition === "left" && (
+        <span className="size-4 shrink-0">{icon}</span>
+      )}
+
       {title}
+
+      {icon && iconPosition === "right" && (
+        <span className="size-4 shrink-0">{icon}</span>
+      )}
     </Button>
   );
 };

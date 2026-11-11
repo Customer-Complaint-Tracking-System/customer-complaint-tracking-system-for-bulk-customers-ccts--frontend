@@ -1,5 +1,6 @@
-"use client"
-import { Button } from "@/components/ui/button";
+"use client";
+
+import CustomButton from "@/components/shared/custom-button";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -36,53 +37,60 @@ const EscalationFilters = () => {
     setCurrentPage(1);
   };
 
+  const filterLabelClass = "text-[11px] font-medium text-slate-500";
+
+  const selectTriggerClass =
+    "h-9 w-full min-w-0 border-slate-200 text-xs focus:ring-teal-500";
+
   return (
-    <div className="px-4 pb-4">
-      <div className="p-4 pb-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+    <div className="pb-2 px-1">
+      {/* Header */}
+      <div className="flex flex-col gap-2 pb-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-base font-semibold text-slate-900">
             Escalation queue
           </h2>
-          <p className="text-xs text-slate-500 mt-1">
+
+          <p className="mt-1 text-xs text-slate-500">
             Review urgent complaints and coordinate the next action.
           </p>
         </div>
 
         <p className="text-xs text-slate-500">48 escalations · Newest first</p>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1.1fr_1.3fr_auto] gap-2 items-end">
+
+      {/* Filters */}
+      <div className="grid grid-cols-1 items-end gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-[2fr_1fr_1fr_1fr_1fr_1fr]">
         {/* Search */}
-        <div className="space-y-1.5">
-          <label className="text-[11px] font-medium text-slate-500">
-            Search escalations
-          </label>
+        <div className="min-w-0 space-y-1.5 mb-2">
+          <label className={filterLabelClass}>Search escalations</label>
+
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-slate-400" />
+
             <Input
               placeholder="Escalation ID or complaint ID"
               value={search}
               onChange={(e) => handleFilterChange(setSearch, e.target.value)}
-              className="h-8 pl-9 text-xs border-slate-200 focus-visible:ring-teal-500"
+              className="h-10 w-full min-w-0 border-slate-200 pl-9 text-xs focus-visible:ring-brand-accent/20"
             />
           </div>
         </div>
 
         {/* Status */}
-        <div className="space-y-1.5">
-          <label className="text-[11px] font-medium text-slate-500">
-            Status
-          </label>
+        <div className="min-w-0 space-y-1.5">
+          <label className={filterLabelClass}>Status</label>
+
           <Select
             value={status}
             onValueChange={(v) => {
-              if (v) {
-                handleFilterChange(setStatus, v);
-              }
+              if (v) handleFilterChange(setStatus, v);
             }}
           >
-            <SelectTrigger className="h-8 text-xs border-slate-200">
+            <SelectTrigger className={selectTriggerClass}>
               <SelectValue placeholder="All statuses" />
             </SelectTrigger>
+
             <SelectContent>
               <SelectItem value="all">All statuses</SelectItem>
               <SelectItem value="New">New</SelectItem>
@@ -93,21 +101,19 @@ const EscalationFilters = () => {
         </div>
 
         {/* Priority */}
-        <div className="space-y-1.5">
-          <label className="text-[11px] font-medium text-slate-500">
-            Priority
-          </label>
+        <div className="min-w-0 space-y-1.5">
+          <label className={filterLabelClass}>Priority</label>
+
           <Select
             value={priority}
             onValueChange={(v) => {
-              if (v) {
-                handleFilterChange(setPriority, v);
-              }
+              if (v) handleFilterChange(setPriority, v);
             }}
           >
-            <SelectTrigger className="h-8 text-xs border-slate-200">
+            <SelectTrigger className={selectTriggerClass}>
               <SelectValue placeholder="All priorities" />
             </SelectTrigger>
+
             <SelectContent>
               <SelectItem value="all">All priorities</SelectItem>
               <SelectItem value="High">High</SelectItem>
@@ -117,22 +123,20 @@ const EscalationFilters = () => {
           </Select>
         </div>
 
-        {/* Source */}
-        <div className="space-y-1.5">
-          <label className="text-[11px] font-medium text-slate-500">
-            Escalated By
-          </label>
+        {/* Escalated By */}
+        <div className="min-w-0 space-y-1.5">
+          <label className={filterLabelClass}>Escalated By</label>
+
           <Select
             value={source}
             onValueChange={(v) => {
-              if (v) {
-                handleFilterChange(setSource, v);
-              }
+              if (v) handleFilterChange(setSource, v);
             }}
           >
-            <SelectTrigger className="h-8 text-xs border-slate-200">
+            <SelectTrigger className={selectTriggerClass}>
               <SelectValue placeholder="All sources" />
             </SelectTrigger>
+
             <SelectContent>
               <SelectItem value="all">All sources</SelectItem>
               <SelectItem value="Customer">Customer</SelectItem>
@@ -141,20 +145,20 @@ const EscalationFilters = () => {
           </Select>
         </div>
 
-        {/* Date range */}
-        <div className="space-y-1.5">
-          <label className="text-[11px] font-medium text-slate-500">Date</label>
+        {/* Date Range */}
+        <div className="min-w-0 space-y-1.5">
+          <label className={filterLabelClass}>Date</label>
+
           <Select
             value={dateRange}
             onValueChange={(v) => {
-              if (v) {
-                handleFilterChange(setDateRange, v);
-              }
+              if (v) handleFilterChange(setDateRange, v);
             }}
           >
-            <SelectTrigger className="h-8 text-xs border-slate-200">
-              <SelectValue />
+            <SelectTrigger className={selectTriggerClass}>
+              <SelectValue placeholder="Select date" />
             </SelectTrigger>
+
             <SelectContent>
               <SelectItem value="october">1–31 Oct 2026</SelectItem>
               <SelectItem value="september">1–30 Sep 2026</SelectItem>
@@ -164,13 +168,16 @@ const EscalationFilters = () => {
           </Select>
         </div>
 
-        <Button
-          variant="ghost"
-          onClick={resetFilters}
-          className="h-8 text-xs text-slate-500 hover:text-teal-700"
-        >
-          Reset
-        </Button>
+        {/* Reset */}
+        <div className="min-w-0 space-y-1.5">
+          <label className={filterLabelClass}>&nbsp;</label>
+
+          <CustomButton
+            title="Reset filters"
+            onClick={resetFilters}
+            className="w-full px-2 text-xs mb-2"
+          />
+        </div>
       </div>
     </div>
   );

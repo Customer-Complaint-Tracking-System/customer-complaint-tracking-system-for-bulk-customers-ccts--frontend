@@ -51,7 +51,7 @@ const stats = [
 
 const ComplaintStats = () => {
   return (
-    <section className="w-full bg-slate-50/70 p-4 sm:p-5">
+    <section className="w-full bg-slate-50/70">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
         {stats.map((stat) => {
           const Icon = stat.icon;

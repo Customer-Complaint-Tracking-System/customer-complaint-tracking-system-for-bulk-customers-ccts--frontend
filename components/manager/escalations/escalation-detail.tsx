@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import CustomButton from "@/components/shared/custom-button";
 
 export default function EscalationDetails() {
   const [assignee, setAssignee] = useState("Chinedu Eze");
@@ -300,7 +301,7 @@ export default function EscalationDetails() {
                     }
                   }}
                 >
-                  <SelectTrigger className="h-9 text-xs">
+                  <SelectTrigger className=" w-full">
                     <SelectValue />
                   </SelectTrigger>
 
@@ -332,7 +333,7 @@ export default function EscalationDetails() {
                     }
                   }}
                 >
-                  <SelectTrigger className="h-9 text-xs">
+                  <SelectTrigger className="h-9 text-xs w-full">
                     <SelectValue />
                   </SelectTrigger>
 
@@ -351,19 +352,18 @@ export default function EscalationDetails() {
                 </p>
 
                 <div className="mt-2 flex gap-2">
-                  <Button
-                    size="sm"
+                  <CustomButton
                     onClick={saveChanges}
                     disabled={
                       assignee === savedAssignee && status === savedStatus
                     }
-                  >
-                    Save changes
-                  </Button>
-
-                  <Button size="sm" variant="outline" onClick={cancelChanges}>
-                    Cancel
-                  </Button>
+                    title="Save changes"
+                  />
+                  <CustomButton
+                    title="Cancel"
+                    variant="outline"
+                    onClick={cancelChanges}
+                  />
                 </div>
 
                 {message && (
@@ -405,17 +405,18 @@ export default function EscalationDetails() {
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
                   placeholder="Write an internal update..."
-                  className="min-h-[90px] text-xs"
+                  className="min-h-[90px] text-xs focus-visible:ring-brand-accent/20 resize-none"
                 />
 
                 <div className="mt-2 flex items-center justify-between gap-2">
                   <span className="text-[10px] text-slate-400">
                     Not visible to the customer
                   </span>
-
-                  <Button size="sm" onClick={addNote} disabled={!note.trim()}>
-                    Add note
-                  </Button>
+                  <CustomButton
+                    title="Add note"
+                    onClick={addNote}
+                    disabled={!note.trim()}
+                  />
                 </div>
               </CardContent>
             </Card>

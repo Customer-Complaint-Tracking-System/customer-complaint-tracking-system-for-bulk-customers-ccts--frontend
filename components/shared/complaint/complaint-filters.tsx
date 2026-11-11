@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/popover";
 
 import { Calendar } from "@/components/ui/calendar";
+import CustomButton from "../custom-button";
 
 export interface ComplaintFilterValues {
   search: string;
@@ -66,8 +67,7 @@ const ComplaintFilters: React.FC<ComplaintFiltersProps> = ({
     }));
   };
 
-  const handleApplyFilters = () => {
-  };
+  const handleApplyFilters = () => {};
 
   const handleResetFilters = () => {
     const defaultFilters: ComplaintFilterValues = {
@@ -114,7 +114,7 @@ const ComplaintFilters: React.FC<ComplaintFiltersProps> = ({
         </div>
 
         {/* Filter controls */}
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-6">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-6 items-center">
           {/* Status */}
           <div className="min-w-0 space-y-1.5">
             <Label className="text-[11px] font-semibold text-slate-700">
@@ -127,7 +127,7 @@ const ComplaintFilters: React.FC<ComplaintFiltersProps> = ({
                 if (value) updateFilter("status", value);
               }}
             >
-              <SelectTrigger className="h-9 w-full rounded-lg border-slate-200 text-xs shadow-none">
+              <SelectTrigger className="h-9 w-full border-slate-200 text-xs shadow-none">
                 <SelectValue placeholder="All statuses" />
               </SelectTrigger>
 
@@ -154,7 +154,7 @@ const ComplaintFilters: React.FC<ComplaintFiltersProps> = ({
                 if (value) updateFilter("priority", value);
               }}
             >
-              <SelectTrigger className="h-9 w-full rounded-lg border-slate-200 text-xs shadow-none">
+              <SelectTrigger className="h-9 w-full  border-slate-200 text-xs shadow-none">
                 <SelectValue placeholder="All priorities" />
               </SelectTrigger>
 
@@ -179,7 +179,7 @@ const ComplaintFilters: React.FC<ComplaintFiltersProps> = ({
                 if (value) updateFilter("category", value);
               }}
             >
-              <SelectTrigger className="h-9 w-full rounded-lg border-slate-200 text-xs shadow-none">
+              <SelectTrigger className="h-9 w-full  border-slate-200 text-xs shadow-none">
                 <SelectValue placeholder="All categories" />
               </SelectTrigger>
 
@@ -206,7 +206,7 @@ const ComplaintFilters: React.FC<ComplaintFiltersProps> = ({
                 if (value) updateFilter("assignedStaff", value);
               }}
             >
-              <SelectTrigger className="h-9 w-full rounded-lg border-slate-200 text-xs shadow-none">
+              <SelectTrigger className="h-9 w-full  border-slate-200 text-xs shadow-none">
                 <SelectValue placeholder="All staff" />
               </SelectTrigger>
 
@@ -223,7 +223,7 @@ const ComplaintFilters: React.FC<ComplaintFiltersProps> = ({
           </div>
 
           {/* Date received */}
-          <div className="min-w-0 space-y-1.5">
+          <div className="w-full space-y-1.5">
             <Label className="text-[11px] font-semibold text-slate-700">
               Date received
             </Label>
@@ -233,7 +233,7 @@ const ComplaintFilters: React.FC<ComplaintFiltersProps> = ({
                 <Button
                   type="button"
                   variant="outline"
-                  className="h-9 w-full justify-between rounded-lg border-slate-200 px-2.5 text-xs font-normal text-slate-700 hover:bg-slate-50"
+                  className="h-9 w-full justify-between border-slate-200 px-2.5 text-xs font-normal text-slate-700 hover:bg-slate-50"
                 >
                   <span className="flex min-w-0 items-center gap-2">
                     <CalendarDays className="size-3.5 shrink-0 text-slate-500" />
@@ -279,13 +279,7 @@ const ComplaintFilters: React.FC<ComplaintFiltersProps> = ({
 
           {/* Apply filters */}
           <div className="flex items-end gap-2">
-            <Button
-              type="button"
-              onClick={handleApplyFilters}
-              className="h-9 flex-1 rounded-lg bg-teal-600 px-3 text-xs font-semibold text-white hover:bg-teal-700"
-            >
-              Apply filters
-            </Button>
+            <CustomButton title="Apply filters" onClick={handleApplyFilters} />
           </div>
         </div>
       </div>

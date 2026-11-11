@@ -6,7 +6,7 @@ import React from "react";
 
 const EscalationsHomepage = () => {
   return (
-    <div className="w-full min-h-screen bg-slate-50/70 p-4 md:p-6 space-y-5">
+    <div className="w-full min-h-screen bg-slate-50/70 space-y-5">
       <EscalationHeader />
       <EscalationFilters />
       <EscalationTable />
