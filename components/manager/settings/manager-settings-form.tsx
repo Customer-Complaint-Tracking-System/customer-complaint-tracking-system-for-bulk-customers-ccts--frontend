@@ -439,7 +439,7 @@ export function ManagerSettingsForm({
                   }}
                   disabled={!settings.autoApprovalEnabled}
                 >
-                  <SelectTrigger className="h-8 text-[10px]">
+                  <SelectTrigger className="w-full text-[10px]">
                     <SelectValue placeholder="Select complaint-history criteria" />
                   </SelectTrigger>
 
@@ -485,7 +485,7 @@ export function ManagerSettingsForm({
                   }}
                   disabled={!settings.autoApprovalEnabled}
                 >
-                  <SelectTrigger className="h-8 text-[10px]">
+                  <SelectTrigger className="w-full text-[10px]">
                     <SelectValue placeholder="Select an action" />
                   </SelectTrigger>
 
@@ -532,7 +532,7 @@ export function ManagerSettingsForm({
                   }
                 }}
               >
-                <SelectTrigger className="h-8 text-[10px]">
+                <SelectTrigger className="w-full text-[10px]">
                   <SelectValue placeholder="Select an approval action" />
                 </SelectTrigger>
 
@@ -561,7 +561,7 @@ export function ManagerSettingsForm({
                   }
                 }}
               >
-                <SelectTrigger className="h-8 text-[10px]">
+                <SelectTrigger className="w-full text-[10px]">
                   <SelectValue placeholder="Select a refund method" />
                 </SelectTrigger>
 
@@ -637,7 +637,7 @@ export function ManagerSettingsForm({
                     }
                   }}
                 >
-                  <SelectTrigger className="h-8 text-[10px]">
+                  <SelectTrigger className="w-full text-[10px]">
                     <SelectValue placeholder="Select a timezone" />
                   </SelectTrigger>
 
@@ -669,9 +669,8 @@ export function ManagerSettingsForm({
                     onChange={(event) =>
                       updateSetting("startTime", event.target.value)
                     }
-                    className="h-8 text-[10px]"
+                    className="h-10 text-[10px]"
                   />
-                  <Clock className="pointer-events-none absolute right-3 top-2 h-3.5 w-3.5 text-slate-400" />
                 </div>
               </div>
 
@@ -687,9 +686,8 @@ export function ManagerSettingsForm({
                     onChange={(event) =>
                       updateSetting("endTime", event.target.value)
                     }
-                    className="h-8 text-[10px]"
+                    className="h-10 text-[10px]"
                   />
-                  <Clock className="pointer-events-none absolute right-3 top-2 h-3.5 w-3.5 text-slate-400" />
                 </div>
               </div>
             </div>
