@@ -2,33 +2,37 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import useProfileHook from "@/hooks/use-profile.hook";
+import { supabase } from "@/lib/supabase/supabase";
+import { formatStaffRole } from "@/lib/utils";
 import { Side } from "@base-ui/react/internals/useAnchorPositioning";
 import { cn } from "cn";
 import { ChevronDown, LogOut, Settings, UserRound } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-type UserRole = "manager" | "staff";
-
 type UserProfileProps = {
-  fullname: string;
-  role: UserRole;
   image?: string | null;
   side: Side;
   sidebar?: boolean;
 };
 
-const UserProfile = ({ fullname, role, image, side,sidebar }: UserProfileProps) => {
+const UserProfile = ({ image, side, sidebar }: UserProfileProps) => {
   const router = useRouter();
+  const { data, isPending } = useProfileHook();
 
-  const initials = fullname
+  if (isPending || !data) {
+    return null;
+  }
+
+  const initials = data.data.name
     .trim()
     .split(/\s+/)
     .slice(0, 2)
@@ -36,7 +40,26 @@ const UserProfile = ({ fullname, role, image, side,sidebar }: UserProfileProps) 
     .join("")
     .toUpperCase();
 
-  const formattedRole = role === "manager" ? "Manager" : "Staff";
+  const role = formatStaffRole(data.data.role);
+  const fullname = data.data.name;
+
+  const handleSignOut = async () => {
+    try {
+      const { error } = await supabase.auth.signOut({ scope: "local" });
+
+      if (error) {
+        console.error("Logout failed:", error.message);
+        return;
+      }
+
+      console.log("Successfully signed out");
+
+      router.replace("/login");
+      router.refresh();
+    } catch (error) {
+      console.error("Unexpected logout error:", error);
+    }
+  };
 
   return (
     <DropdownMenu>
@@ -68,9 +91,7 @@ const UserProfile = ({ fullname, role, image, side,sidebar }: UserProfileProps) 
             >
               {fullname}
             </p>
-            <p className="text-xs capitalize text-muted-foreground">
-              {formattedRole}
-            </p>
+            <p className="text-xs capitalize text-muted-foreground">{role}</p>
           </div>
 
           <ChevronDown className="size-4 shrink-0 text-muted-foreground" />
@@ -95,7 +116,7 @@ const UserProfile = ({ fullname, role, image, side,sidebar }: UserProfileProps) 
 
               <div className="min-w-0">
                 <p className="truncate text-sm font-medium">{fullname}</p>
-                <p className="text-xs text-brand-text-gray">{formattedRole}</p>
+                <p className="text-xs text-brand-text-gray">{role}</p>
               </div>
             </div>
           </DropdownMenuLabel>
@@ -103,12 +124,18 @@ const UserProfile = ({ fullname, role, image, side,sidebar }: UserProfileProps) 
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem onSelect={() => router.push("/manager/profile")}>
+        <DropdownMenuItem
+          disabled
+          onClick={() => router.push("/manager/profile")}
+        >
           <UserRound className="mr-2 size-4" />
           My Profile
         </DropdownMenuItem>
 
-        <DropdownMenuItem onSelect={() => router.push("/manager/settings")}>
+        <DropdownMenuItem
+          disabled
+          onClick={() => router.push("/manager/settings")}
+        >
           <Settings className="mr-2 size-4" />
           Settings
         </DropdownMenuItem>
@@ -117,7 +144,7 @@ const UserProfile = ({ fullname, role, image, side,sidebar }: UserProfileProps) 
 
         <DropdownMenuItem
           className="text-destructive focus:text-destructive"
-          onSelect={() => router.push("/login")}
+          onClick={handleSignOut}
         >
           <LogOut className="mr-2 size-4" />
           Log out

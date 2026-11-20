@@ -8,7 +8,7 @@ import {
   Inbox,
   LayoutDashboard,
   Settings,
-  Users
+  Users,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -123,12 +123,7 @@ const ManagerDashbaordSidebar = () => {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <UserProfile
-          fullname="Chukwu sabastine"
-          role="manager"
-          side="right"
-          sidebar
-        />
+        <UserProfile side="right" sidebar />
       </SidebarFooter>
     </Sidebar>
   );

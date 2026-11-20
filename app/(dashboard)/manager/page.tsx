@@ -3,7 +3,7 @@ import ComplaintStats from "@/components/manager/home/complaint-stats";
 import NeedsYourAttention from "@/components/manager/home/need-your-attention";
 import RecentActivities from "@/components/manager/home/recent-activity";
 
-const ManagerHomePage = () => {
+const ManagerHomePage = async () => {
   return (
     <div className="space-y-2 pb-10">
       <ComplaintStats />

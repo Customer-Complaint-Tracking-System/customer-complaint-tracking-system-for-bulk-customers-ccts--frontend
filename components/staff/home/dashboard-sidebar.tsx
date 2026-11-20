@@ -121,8 +121,6 @@ const StaffDashboardSidebar = () => {
       </SidebarContent>
       <SidebarFooter>
         <UserProfile
-          fullname="Lady Precious"
-          role="staff"
           side="right"
           sidebar
         />

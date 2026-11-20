@@ -1,24 +1,33 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
 import {
-  ArrowRight,
   Eye,
   EyeOff,
-  Loader2,
   LockKeyhole,
   Mail,
-  ShieldCheck,
+  ShieldCheck
 } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 
-import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
+import useProfileHook from "@/hooks/use-profile.hook";
+import { supabase } from "@/lib/supabase/supabase";
 import { useRouter } from "next/navigation";
+import CustomButton from "../shared/custom-button";
+import { useQueryClient } from "@tanstack/react-query";
+import axiosHandler from "@/lib/axios";
+import { getProfile } from "@/service/profile/profile.service";
+import { getDashboardRoute } from "@/lib/dashboard-route";
+import { ProfileResponse } from "@/service/profile/profile.type";
+import { queryKeys } from "@/lib/query-keys";
+
+
 
 export default function LoginForm() {
+  const queryClient = useQueryClient();
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -26,18 +35,47 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    try {
-      setIsLoading(true);
-      router.push("/manager");
-    } catch (error) {
-      console.error("Login failed:", error);
-    } finally {
-      setIsLoading(false);
+  try {
+    setIsLoading(true);
+
+    // 1. Authenticate user with Supabase
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) throw error;
+
+    // 2. Ensure your Axios handler can authenticate the profile request.
+    // If your Axios interceptor already reads the Supabase session,
+    // you don't need to set this manually.
+    const accessToken = data.session?.access_token;
+
+    if (!accessToken) {
+      throw new Error("Authentication token not found");
     }
-  };
+
+    axiosHandler.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+
+    // Fetch profile directly
+    const profile = await getProfile();
+    console.log(profile);
+    
+
+    // Store profile in TanStack Query cache
+    queryClient.setQueryData(queryKeys.profile.root, profile);
+
+    // 4. Redirect based on user's role
+    router.replace(getDashboardRoute(profile.data.role));
+  } catch (error) {
+    console.error("Login failed:", error);
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <div className="w-full max-w-md">
@@ -134,25 +172,12 @@ export default function LoginForm() {
             Keep me signed in
           </Label>
         </div>
-
-        {/* Submit */}
-        <Button
-          type="submit"
+        <CustomButton
+          title={isLoading ? "Signing in..." : "Sign in"}
+          className="w-full"
           disabled={isLoading}
-          className="group h-12 w-full rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-700 text-base font-semibold shadow-lg shadow-emerald-600/25 transition hover:from-emerald-700 hover:to-emerald-800 hover:shadow-emerald-600/40 disabled:opacity-70"
-        >
-          {isLoading ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Signing in...
-            </>
-          ) : (
-            <>
-              Sign in
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </>
-          )}
-        </Button>
+          type="submit"
+        />
       </form>
 
       {/* Footer */}

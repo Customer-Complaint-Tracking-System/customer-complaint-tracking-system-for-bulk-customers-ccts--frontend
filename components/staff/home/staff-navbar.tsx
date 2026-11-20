@@ -23,11 +23,7 @@ const StaffNavbar = () => {
           <Notification />
 
           <div className="ml-1 border-l border-border pl-3 sm:pl-4">
-            <UserProfile
-              role="staff"
-              fullname="Lady Precious"
-              side="bottom"
-            />
+            <UserProfile side="bottom" />
           </div>
         </div>
       </div>

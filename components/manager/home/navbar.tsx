@@ -5,7 +5,6 @@ import ComplaintDateSelector from "./complaint-date-selector";
 import Notification from "../../shared/notification";
 import ManagerNavbarHeader from "./navbar-header";
 
-
 const ManagerNavbar = () => {
   return (
     <header className="flex w-full flex-col gap-5 border-b border-border/60 bg-background px-4 py-5 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
@@ -21,11 +20,7 @@ const ManagerNavbar = () => {
           <Notification />
 
           <div className="ml-1 border-l border-border pl-3 sm:pl-4">
-            <UserProfile
-              role="manager"
-              fullname="Chukwu Sabastine"
-              side="bottom"
-            />
+            <UserProfile side="bottom" />
           </div>
         </div>
       </div>

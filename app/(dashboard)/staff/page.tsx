@@ -1,6 +1,5 @@
 import MyAssignedComplaints from "@/components/staff/home/assigned-complaint";
 import ComplaintOverview from "@/components/staff/home/complaint-overview";
-import React from "react";
 
 const StaffHomepage = () => {
   return (
